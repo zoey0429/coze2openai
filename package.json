@@ -4,11 +4,15 @@
   "description": "turn coze api into openai",
   "main": "app.js",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "node app.js"
   },
-  "keywords": [],
+  "keywords": ["coze", "openai", "api", "converter"],
   "author": "fatwang2",
   "license": "MIT",
   "dependencies": {
