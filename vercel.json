@@ -1,21 +1,30 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "app.js",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/v1/(.*)",
-        "dest": "/app.js",
-        "methods": ["OPTIONS", "POST"]
-      },
-      {
-        "src": "/",
-        "dest": "/app.js",
-        "methods": ["GET"]
-      }
-    ]
-  }
+  "version": 2,
+  "builds": [
+    {
+      "src": "app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/v1/models",
+      "dest": "/app.js",
+      "methods": ["GET", "OPTIONS"]
+    },
+    {
+      "src": "/v1/chat/completions",
+      "dest": "/app.js", 
+      "methods": ["POST", "OPTIONS"]
+    },
+    {
+      "src": "/",
+      "dest": "/app.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/app.js"
+    }
+  ]
+}
