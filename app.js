@@ -40,6 +40,55 @@ app.get("/", (req, res) => {
   `);
 });
 
+// 添加 /v1/models 端点
+app.get("/v1/models", (req, res) => {
+  const authHeader = req.headers["authorization"] || req.headers["Authorization"];
+  
+  // 可选：添加认证检查
+  if (!authHeader) {
+    return res.status(401).json({
+      error: {
+        message: "You didn't provide an API key.",
+        type: "invalid_request_error"
+      }
+    });
+  }
+
+  // 返回模型列表
+  const models = {
+    object: "list",
+    data: []
+  };
+
+  // 如果配置了多个Bot，添加到模型列表
+  if (Object.keys(botConfig).length > 0) {
+    Object.keys(botConfig).forEach(modelName => {
+      models.data.push({
+        id: modelName,
+        object: "model",
+        created: Math.floor(Date.now() / 1000),
+        owned_by: "coze",
+        permission: [],
+        root: modelName,
+        parent: null
+      });
+    });
+  } else {
+    // 如果没有配置多Bot，返回默认模型
+    models.data.push({
+      id: "gpt-4",
+      object: "model", 
+      created: Math.floor(Date.now() / 1000),
+      owned_by: "coze",
+      permission: [],
+      root: "gpt-4",
+      parent: null
+    });
+  }
+
+  res.json(models);
+});
+
 app.post("/v1/chat/completions", async (req, res) => {
   const authHeader =
     req.headers["authorization"] || req.headers["Authorization"];
