@@ -1,49 +1,21 @@
 {
-  "functions": {
-    "app.js": {
-      "runtime": "@vercel/node",
-      "maxDuration": 10
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/v1/models",
-      "destination": "/app.js"
-    },
-    {
-      "source": "/v1/chat/completions",
-      "destination": "/app.js"
-    },
-    {
-      "source": "/debug",
-      "destination": "/app.js"
-    },
-    {
-      "source": "/",
-      "destination": "/app.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/app.js"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
-        }
-      ]
-    }
-  ]
-}
+    "version": 2,
+    "builds": [
+      {
+        "src": "app.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/v1/(.*)",
+        "dest": "/app.js",
+        "methods": ["OPTIONS", "POST"]
+      },
+      {
+        "src": "/",
+        "dest": "/app.js",
+        "methods": ["GET"]
+      }
+    ]
+  }
